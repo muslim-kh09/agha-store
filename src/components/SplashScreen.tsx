@@ -14,7 +14,8 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
     const t2 = setTimeout(() => setPhase("exit"), 1400);
     const t3 = setTimeout(() => { setPhase("done"); onComplete(); }, 2000);
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
-  }, [onComplete]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (phase === "done") return null;
 

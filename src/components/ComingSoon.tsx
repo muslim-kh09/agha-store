@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import SplashScreen from "./SplashScreen";
 
@@ -31,61 +31,102 @@ export default function ComingSoon() {
     return () => clearInterval(interval);
   }, []);
 
+  const handleComplete = useCallback(() => setSplashDone(true), []);
+
   if (!mounted) return null;
 
   return (
     <>
-      <SplashScreen onComplete={() => setSplashDone(true)} />
+      <SplashScreen onComplete={handleComplete} />
       <div style={{
-        minHeight: "100vh", display: "flex", flexDirection: "column",
+        position: "relative",
+        minHeight: "100vh", 
+        display: "flex", flexDirection: "column",
         alignItems: "center", justifyContent: "center",
-        background: "#080808", color: "#E8E0D0", textAlign: "center",
+        backgroundColor: "#050505",
+        color: "#fff", textAlign: "center",
         padding: "0 20px",
-        transition: "opacity 0.7s ease",
-        opacity: splashDone ? 1 : 0
+        transition: "opacity 1s ease",
+        opacity: splashDone ? 1 : 0,
+        overflow: "hidden"
       }}>
-        <div style={{ position: "relative", width: 80, height: 80, marginBottom: 40 }}>
-          <Image src="/images/lion-logo.png" alt="Agha Store" fill style={{ objectFit: "contain" }} />
+        {/* Background Image with Heavy Dark Overlay */}
+        <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+          <Image 
+            src="/images/prod-varsity.png" 
+            alt="Background" 
+            fill 
+            style={{ objectFit: "cover", objectPosition: "center", filter: "grayscale(50%)" }} 
+            priority
+          />
+          <div style={{
+            position: "absolute", inset: 0,
+            background: "linear-gradient(to bottom, rgba(5,5,5,0.7) 0%, rgba(5,5,5,0.95) 100%)",
+            backdropFilter: "blur(6px)"
+          }} />
         </div>
-        
-        <h1 style={{
-          fontSize: "clamp(2.5rem, 6vw, 4rem)", fontWeight: 700,
-          fontFamily: "'Amiri', Georgia, serif", color: "#C5A059",
-          marginBottom: 16
-        }}>
-          قريباً جداً
-        </h1>
-        
-        <p style={{
-          fontSize: "1.2rem", color: "#8A8278", marginBottom: 48, maxWidth: 500, lineHeight: 1.8
-        }}>
-          نعمل على تجهيز أحدث تشكيلات الأزياء الشبابية و الستريت وير. المتجر مغلق حالياً وسنعود بقوة في ٢٥ يوليو!
-        </p>
 
-        <div style={{
-          display: "flex", gap: "clamp(12px, 3vw, 24px)", justifyContent: "center", flexWrap: "wrap",
-          direction: "ltr"
-        }}>
-          {[
-            { label: "يوم", value: timeLeft.days },
-            { label: "ساعة", value: timeLeft.hours },
-            { label: "دقيقة", value: timeLeft.minutes },
-            { label: "ثانية", value: timeLeft.seconds },
-          ].map((item, i) => (
-            <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <div style={{
-                width: "clamp(60px, 15vw, 80px)", height: "clamp(60px, 15vw, 80px)", borderRadius: 8,
-                background: "#121212", border: "1px solid rgba(197,160,89,0.2)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "clamp(1.5rem, 5vw, 2rem)", fontWeight: 700, fontFamily: "monospace", color: "#E8E0D0"
-              }}>
-                {item.value.toString().padStart(2, "0")}
-              </div>
-              <span style={{ marginTop: 12, fontSize: 13, color: "#C5A059", letterSpacing: "0.1em" }}>
-                {item.label}
-              </span>
+        {/* Content */}
+        <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", width: "100%", maxWidth: 800 }}>
+          <div style={{ position: "relative", width: 90, height: 90, marginBottom: 32 }}>
+            <Image src="/images/lion-logo.png" alt="Agha Store" fill style={{ objectFit: "contain" }} />
+          </div>
+          
+          <div style={{
+            background: "rgba(255,255,255,0.03)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: 24,
+            padding: "clamp(32px, 5vw, 64px) clamp(20px, 4vw, 40px)",
+            width: "100%",
+            backdropFilter: "blur(20px)",
+            boxShadow: "0 20px 40px rgba(0,0,0,0.5)"
+          }}>
+            <p style={{
+              fontSize: "clamp(0.7rem, 2vw, 0.9rem)", letterSpacing: "0.4em", textTransform: "uppercase",
+              color: "#C5A059", marginBottom: 12, fontWeight: 700
+            }}>
+              الافتتاح الأول — The First Drop
+            </p>
+            <h1 style={{
+              fontSize: "clamp(2rem, 6vw, 4.5rem)", fontWeight: 800,
+              fontFamily: "'Tajawal', sans-serif", color: "#FFF",
+              marginBottom: 16, lineHeight: 1.1
+            }}>
+              استعدوا لشيء مختلف
+            </h1>
+            <p style={{
+              fontSize: "clamp(1rem, 2vw, 1.1rem)", color: "#A09A96", marginBottom: 48, lineHeight: 1.6, maxWidth: 600, marginInline: "auto"
+            }}>
+              نحن نجهز لإطلاق تشكيلتنا الأولى من أزياء الستريت وير. المتجر يفتح أبوابه رسمياً يوم ٢٥ يوليو. كن أول من يمتلك القطع الحصرية.
+            </p>
+
+            <div style={{
+              display: "flex", gap: "clamp(12px, 3vw, 24px)", justifyContent: "center", flexWrap: "wrap",
+              direction: "ltr"
+            }}>
+              {[
+                { label: "يوم", value: timeLeft.days },
+                { label: "ساعة", value: timeLeft.hours },
+                { label: "دقيقة", value: timeLeft.minutes },
+                { label: "ثانية", value: timeLeft.seconds },
+              ].map((item, i) => (
+                <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                  <div style={{
+                    width: "clamp(70px, 15vw, 90px)", height: "clamp(70px, 15vw, 90px)", borderRadius: 16,
+                    background: "rgba(0,0,0,0.4)", border: "1px solid rgba(197,160,89,0.3)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: "clamp(1.8rem, 5vw, 2.5rem)", fontWeight: 800, fontFamily: "monospace", color: "#FFF",
+                    boxShadow: "inset 0 0 20px rgba(197,160,89,0.1)"
+                  }}>
+                    {item.value.toString().padStart(2, "0")}
+                  </div>
+                  <span style={{ marginTop: 16, fontSize: 13, color: "#C5A059", letterSpacing: "0.15em", fontWeight: 500 }}>
+                    {item.label}
+                  </span>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </>
