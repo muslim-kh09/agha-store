@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useEffect } from "react";
+import Image from "next/image";
 
 /* ── Arrow icon ── */
 const ArrowIcon = () => (
