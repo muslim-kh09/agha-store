@@ -1,6 +1,31 @@
 "use client";
-import ComingSoon from "@/components/ComingSoon";
+import { useState } from "react";
+import SplashScreen from "@/components/SplashScreen";
+import Navbar from "@/components/Navbar";
+import HeroSection from "@/components/HeroSection";
+import CategoriesSection from "@/components/CategoriesSection";
+import ProductCatalog from "@/components/ProductCatalog";
+import AboutSection from "@/components/AboutSection";
+import Footer from "@/components/Footer";
 
 export default function HomePage() {
-  return <ComingSoon />;
+  const [splashDone, setSplashDone] = useState(false);
+
+  return (
+    <>
+      <SplashScreen onComplete={() => setSplashDone(true)} />
+
+      <main
+        className="transition-opacity duration-700"
+        style={{ opacity: splashDone ? 1 : 0 }}
+      >
+        <Navbar />
+        <HeroSection />
+        <CategoriesSection />
+        <ProductCatalog />
+        <AboutSection />
+        <Footer />
+      </main>
+    </>
+  );
 }
