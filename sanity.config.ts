@@ -1,6 +1,8 @@
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
-import { schemaTypes } from './src/sanity/schemaTypes'
+import { siteSettings } from './src/sanity/schemaTypes/siteSettings'
+import { category } from './src/sanity/schemaTypes/category'
+import { product } from './src/sanity/schemaTypes/product'
 
 export default defineConfig({
   name: 'default',
@@ -10,6 +12,6 @@ export default defineConfig({
   basePath: '/studio',
   plugins: [structureTool()],
   schema: {
-    types: schemaTypes,
+    types: [siteSettings, category, product],
   },
 })
