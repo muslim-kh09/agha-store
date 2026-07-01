@@ -1,5 +1,5 @@
 import { client } from "@/sanity/lib/client";
-import HomePageClient from "./HomePageClient";
+import ComingSoon from "@/components/ComingSoon";
 
 export const revalidate = 10;
 
@@ -42,5 +42,5 @@ export default async function Page() {
     "heroImage": heroImage.asset->url
   }`) || {};
 
-  return <HomePageClient products={products} categories={categories} settings={siteSettings} homePage={homePage} />;
+  return <ComingSoon />;
 }
