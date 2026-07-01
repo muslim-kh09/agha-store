@@ -32,8 +32,9 @@ const CloseIcon = () => (
   </svg>
 );
 
-export default function Navbar() {
+export default function Navbar({ settings = {} }: { settings?: any }) {
   const [scrolled, setScrolled] = useState(false);
+  const logoUrl = settings.logo || null;
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleScroll = useCallback(() => {
@@ -82,11 +83,18 @@ export default function Navbar() {
 
           {/* Right — logo + hamburger */}
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-            <Link href="/" aria-label="متجر آغا الرئيسية">
-              <div style={{ width: 36, height: 36, position: "relative" }}>
-                <Image src="/images/lion-logo.png" alt="متجر آغا" fill sizes="36px" style={{ objectFit: "contain" }} />
-              </div>
-            </Link>
+            <a href="#" className="nav-logo" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "8px" }}>
+              {logoUrl ? (
+                <Image src={logoUrl} alt="Logo" width={100} height={40} style={{ objectFit: "contain" }} />
+              ) : (
+                <>
+                  <Image src="/images/lion-logo-gold.png" alt="Agha Store Lion Logo" width={32} height={32} />
+                  <span style={{ fontSize: "1.4rem", fontWeight: 700, fontFamily: "'Cormorant Garamond', Georgia, serif", color: "#E8E0D0" }}>
+                    متجر آغا
+                  </span>
+                </>
+              )}
+            </a>
               <button
               id="nav-menu-btn"
               aria-label="Toggle menu"

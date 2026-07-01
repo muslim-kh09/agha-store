@@ -7,8 +7,9 @@ export default async function Page() {
   const products = await client.fetch(`*[_type == "product"] | order(_createdAt desc) {
     "id": _id,
     title,
-    description,
+    "description": pt::text(description),
     price,
+    discountedPrice,
     "category": category->title,
     sizes,
     "images": images[].asset->url,
@@ -20,9 +21,26 @@ export default async function Page() {
     "id": _id,
     "name": title,
     "slug": slug.current,
+    "description": description,
     "image": image.asset->url,
     "count": count(*[_type == "product" && references(^._id)])
   }`);
 
-  return <HomePageClient products={products} categories={categories} />;
+  const siteSettings = await client.fetch(`*[_type == "siteSettings"][0] {
+    "logo": logo.asset->url,
+    primaryColor,
+    backgroundColor,
+    whatsappNumber,
+    instagramLink,
+    facebookLink
+  }`) || {};
+
+  const homePage = await client.fetch(`*[_type == "homePage"][0] {
+    heroTitle,
+    heroSubtitle,
+    ctaText,
+    "heroImage": heroImage.asset->url
+  }`) || {};
+
+  return <HomePageClient products={products} categories={categories} settings={siteSettings} homePage={homePage} />;
 }

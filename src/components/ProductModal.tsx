@@ -28,9 +28,10 @@ const WhatsAppIcon = () => (
 interface ProductModalProps {
   product: Product | null;
   onClose: () => void;
+  settings?: any;
 }
 
-export default function ProductModal({ product, onClose }: ProductModalProps) {
+export default function ProductModal({ product, onClose, settings = {} }: ProductModalProps) {
   const [selectedSize, setSelectedSize] = useState("");
   const [imgIndex, setImgIndex] = useState(0);
   const [sizeError, setSizeError] = useState(false);
@@ -50,9 +51,11 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
 
   if (!product) return null;
 
-  const handleOrder = () => {
-    if (!selectedSize) { setSizeError(true); return; }
-    window.open(buildWhatsAppLink(product, selectedSize), "_blank");
+  const handleCheckout = () => {
+    if (!product || !selectedSize) { setSizeError(true); return; }
+    const number = settings?.whatsappNumber || WHATSAPP_NUMBER;
+    const url = buildWhatsAppLink(product, selectedSize, number);
+    window.open(url, "_blank");
   };
 
   return (
@@ -177,7 +180,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
               <div>
                 <button
                   id="whatsapp-order-btn"
-                  onClick={handleOrder}
+                  onClick={handleCheckout}
                   style={{
                     width: "100%", display: "flex", alignItems: "center", justifyContent: "center",
                     gap: 12, padding: "16px", fontSize: 11,

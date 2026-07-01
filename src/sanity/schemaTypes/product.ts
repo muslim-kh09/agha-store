@@ -17,20 +17,20 @@ export const product = defineType({
       options: { source: 'title' },
     }),
     defineField({
-      name: 'description',
-      title: 'وصف المنتج',
-      type: 'text',
-    }),
-    defineField({
-      name: 'price',
-      title: 'السعر',
-      type: 'number',
-    }),
-    defineField({
       name: 'category',
       title: 'القسم',
       type: 'reference',
       to: [{ type: 'category' }],
+    }),
+    defineField({
+      name: 'price',
+      title: 'السعر الأساسي',
+      type: 'number',
+    }),
+    defineField({
+      name: 'discountedPrice',
+      title: 'السعر بعد الخصم (اختياري)',
+      type: 'number',
     }),
     defineField({
       name: 'sizes',
@@ -52,6 +52,18 @@ export const product = defineType({
       title: 'صور المنتج',
       type: 'array',
       of: [{ type: 'image', options: { hotspot: true } }],
+    }),
+    defineField({
+      name: 'description',
+      title: 'الوصف الشامل (Rich Text)',
+      type: 'array',
+      of: [{ type: 'block' }],
+    }),
+    defineField({
+      name: 'featured',
+      title: 'منتج مميز (يظهر في الصفحة الرئيسية؟)',
+      type: 'boolean',
+      initialValue: false,
     }),
   ],
 })

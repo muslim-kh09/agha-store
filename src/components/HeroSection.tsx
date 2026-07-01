@@ -9,7 +9,11 @@ const ArrowIcon = () => (
   </svg>
 );
 
-export default function HeroSection() {
+export default function HeroSection({ homePage = {} }: { homePage?: any }) {
+  const heroTitle = homePage.heroTitle || "أناقة تليق بك";
+  const heroSubtitle = homePage.heroSubtitle || "نقدم لك أحدث صيحات الموضة الكلاسيكية والحديثة بأجود أنواع الأقمشة الفاخرة.";
+  const ctaText = homePage.ctaText || "اكتشف التشكيلة الجديدة";
+  const heroImage = homePage.heroImage || "/images/hero-fashion-model.png";
   const sectionRef = useRef<HTMLElement>(null);
 
   /* Scroll reveal for text */
@@ -72,63 +76,44 @@ export default function HeroSection() {
         padding: "0 clamp(20px, 5vw, 32px)",
         display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center",
       }}>
-        {/* Eyebrow */}
-        <p
-          className="anim-fade-up"
-          style={{
-            fontSize: 11, letterSpacing: "0.2em",
-            color: "#C5A059",
-            marginBottom: 32,
-            fontFamily: "'Amiri', serif"
-          }}
-        >
-          دروب الموسم — ٢٠٢٦
-        </p>
-
-        {/* Headline */}
-        <h1
-          className="anim-fade-up delay-200"
-          style={{
-            fontSize: "clamp(3rem, 7vw, 5.5rem)",
-            fontWeight: 700,
-            lineHeight: 1.2,
-            marginBottom: 32,
-            fontFamily: "'Amiri', Georgia, serif",
-            color: "#E8E0D0",
-          }}
-        >
-          عبر عن{" "}
-          <em
-            className="gold-gradient-text"
-            style={{ fontStyle: "normal", fontFamily: "inherit" }}
-          >
-            ستايلك.
-          </em>
+        <h1 className="hero-text hero-title" style={{
+          fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
+          fontWeight: 700,
+          lineHeight: 1.1,
+          color: "#FFFFFF",
+          marginBottom: "1rem",
+          fontFamily: "'Amiri', Georgia, serif",
+        }}>
+          {heroTitle}
         </h1>
-
-        {/* Sub */}
-        <p
-          className="anim-fade-up delay-300"
-          style={{
-            fontSize: "1.2rem", fontWeight: 300,
-            lineHeight: 1.9, color: "#8A8278",
-            marginBottom: 48, maxWidth: 480,
-          }}
-        >
-          أحدث صيحات الستريت وير والأزياء الشبابية. قطع مريحة، عصرية، ومصممة لتواكب إيقاع حياتك اليومي.
+        <p className="hero-text hero-subtitle" style={{
+          fontSize: "clamp(1rem, 2vw, 1.25rem)",
+          color: "rgba(255, 255, 255, 0.8)",
+          maxWidth: "600px",
+          marginBottom: "2rem",
+          lineHeight: 1.6,
+        }}>
+          {heroSubtitle}
         </p>
 
-        {/* CTA */}
-        <a
-          href="#collection"
-          id="hero-cta"
-          className="cta-btn anim-fade-up delay-400"
-        >
-          اكتشف التشكيلة
-          <span className="cta-icon" style={{ transform: "scaleX(-1)" }}>
-            <ArrowIcon />
-          </span>
-        </a>
+        <div className="hero-text">
+          <a href="#collection" style={{
+            display: "inline-block",
+            padding: "16px 36px",
+            backgroundColor: "var(--primary-color, #C5A059)",
+            color: "#121212",
+            textDecoration: "none",
+            fontWeight: 600,
+            letterSpacing: "0.05em",
+            borderRadius: "2px",
+            transition: "transform 0.3s, background-color 0.3s",
+          }}
+          onMouseOver={(e) => e.currentTarget.style.transform = "translateY(-2px)"}
+          onMouseOut={(e) => e.currentTarget.style.transform = "translateY(0)"}
+          >
+            {ctaText}
+          </a>
+        </div>
       </div>
 
       {/* Scroll indicator */}

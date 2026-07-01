@@ -17,6 +17,11 @@ export const category = defineType({
       options: { source: 'title' },
     }),
     defineField({
+      name: 'description',
+      title: 'وصف القسم',
+      type: 'text',
+    }),
+    defineField({
       name: 'image',
       title: 'صورة القسم',
       type: 'image',

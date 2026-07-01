@@ -8,7 +8,7 @@ import ProductCatalog from "@/components/ProductCatalog";
 import AboutSection from "@/components/AboutSection";
 import Footer from "@/components/Footer";
 
-export default function HomePageClient({ products, categories }: { products: any[], categories: any[] }) {
+export default function HomePageClient({ products, categories, settings, homePage }: { products: any[], categories: any[], settings: any, homePage: any }) {
   const [splashDone, setSplashDone] = useState(false);
 
   return (
@@ -19,12 +19,12 @@ export default function HomePageClient({ products, categories }: { products: any
         className="transition-opacity duration-700"
         style={{ opacity: splashDone ? 1 : 0 }}
       >
-        <Navbar />
-        <HeroSection />
+        <Navbar settings={settings} />
+        <HeroSection homePage={homePage} />
         <CategoriesSection categories={categories} />
-        <ProductCatalog products={products} />
+        <ProductCatalog products={products} settings={settings} />
         <AboutSection />
-        <Footer />
+        <Footer settings={settings} />
       </main>
     </>
   );

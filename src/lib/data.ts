@@ -106,7 +106,8 @@ export const products: Product[] = [
 
 export function buildWhatsAppLink(
   product: Product,
-  size: string
+  size: string,
+  whatsappNumber: string
 ): string {
   const message = encodeURIComponent(
     `مرحباً متجر آغا،\n\nأود طلب القطعة التالية:\n\n` +
@@ -115,5 +116,5 @@ export function buildWhatsAppLink(
     `• السعر: ${product.price.toLocaleString()} ${product.currency}\n\n` +
     `أرجو تأكيد توفر القطعة وترتيب التوصيل.\n\nشكراً لكم.`
   );
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+  return `https://wa.me/${whatsappNumber}?text=${message}`;
 }

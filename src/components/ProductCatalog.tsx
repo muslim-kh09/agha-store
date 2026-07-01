@@ -4,7 +4,7 @@ import ProductCard from "./ProductCard";
 import ProductModal from "./ProductModal";
 import type { Product } from "@/lib/data";
 
-export default function ProductCatalog({ products = [] }: { products: Product[] }) {
+export default function ProductCatalog({ products = [], settings = {} }: { products: any[], settings?: any }) {
   const [activeFilter, setActiveFilter] = useState("الكل");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -88,7 +88,7 @@ export default function ProductCatalog({ products = [] }: { products: Product[] 
         )}
       </div>
 
-      <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+      <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} settings={settings} />
 
       <style>{`
         @media (max-width: 1024px) { #collection .prod-grid { grid-template-columns: repeat(2, 1fr) !important; } }
