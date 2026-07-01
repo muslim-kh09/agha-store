@@ -1,31 +1,28 @@
-"use client";
-import { useState } from "react";
-import SplashScreen from "@/components/SplashScreen";
-import Navbar from "@/components/Navbar";
-import HeroSection from "@/components/HeroSection";
-import CategoriesSection from "@/components/CategoriesSection";
-import ProductCatalog from "@/components/ProductCatalog";
-import AboutSection from "@/components/AboutSection";
-import Footer from "@/components/Footer";
+import { client } from "@/sanity/lib/client";
+import HomePageClient from "./HomePageClient";
 
-export default function HomePage() {
-  const [splashDone, setSplashDone] = useState(false);
+export const revalidate = 10;
 
-  return (
-    <>
-      <SplashScreen onComplete={() => setSplashDone(true)} />
+export default async function Page() {
+  const products = await client.fetch(`*[_type == "product"] | order(_createdAt desc) {
+    "id": _id,
+    title,
+    description,
+    price,
+    "category": category->title,
+    sizes,
+    "images": images[].asset->url,
+    "currency": "EGP",
+    featured
+  }`);
 
-      <main
-        className="transition-opacity duration-700"
-        style={{ opacity: splashDone ? 1 : 0 }}
-      >
-        <Navbar />
-        <HeroSection />
-        <CategoriesSection />
-        <ProductCatalog />
-        <AboutSection />
-        <Footer />
-      </main>
-    </>
-  );
+  const categories = await client.fetch(`*[_type == "category"] | order(_createdAt asc) {
+    "id": _id,
+    "name": title,
+    "slug": slug.current,
+    "image": image.asset->url,
+    "count": count(*[_type == "product" && references(^._id)])
+  }`);
+
+  return <HomePageClient products={products} categories={categories} />;
 }

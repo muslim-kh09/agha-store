@@ -1,9 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { categories } from "@/lib/data";
-
-export default function CategoriesSection() {
+export default function CategoriesSection({ categories = [] }: { categories: any[] }) {
   const sectionRef = useRef<HTMLElement>(null);
 
   /* Scroll reveal via IntersectionObserver */
@@ -43,64 +41,72 @@ export default function CategoriesSection() {
           </a>
         </div>
 
-        {/* Grid */}
-        <div className="grid-cats" style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: 20,
-        }}>
-          {categories.map((cat, i) => (
-            <a
-              key={cat.id}
-              href="#collection"
-              id={`cat-${cat.slug}`}
-              className="cat-card reveal"
-              style={{
-                height: i === 0 ? 520 : 440,
-                display: "block",
-                textDecoration: "none",
-                transitionDelay: `${i * 0.1}s`,
-              }}
-            >
-              {/* Image */}
-              <div style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
-                <Image
-                  src={cat.image}
-                  alt={cat.name}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  style={{ objectFit: "cover" }}
-                />
-              </div>
+        {/* Grid or Fallback */}
+        {categories.length === 0 ? (
+          <div style={{ textAlign: "center", padding: "60px 0", border: "1px dashed rgba(197,160,89,0.3)", borderRadius: 8 }}>
+            <p style={{ color: "#E8E0D0", fontSize: "1.2rem", fontFamily: "'Amiri', serif" }}>جاري تجهيز الأقسام...</p>
+          </div>
+        ) : (
+          <div className="grid-cats" style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 20,
+          }}>
+            {categories.map((cat: any, i: number) => (
+              <a
+                key={cat.id}
+                href="#collection"
+                id={`cat-${cat.slug}`}
+                className="cat-card reveal"
+                style={{
+                  height: i === 0 ? 520 : 440,
+                  display: "block",
+                  textDecoration: "none",
+                  transitionDelay: `${i * 0.1}s`,
+                }}
+              >
+                {/* Image */}
+                <div style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
+                  {cat.image && (
+                    <Image
+                      src={cat.image}
+                      alt={cat.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      style={{ objectFit: "cover" }}
+                    />
+                  )}
+                </div>
 
-              {/* Base scrim */}
-              <div style={{
-                position: "absolute", inset: 0,
-                background: "linear-gradient(to top, rgba(18,18,18,0.92) 0%, rgba(18,18,18,0.3) 50%, transparent 100%)",
-              }} />
+                {/* Base scrim */}
+                <div style={{
+                  position: "absolute", inset: 0,
+                  background: "linear-gradient(to top, rgba(18,18,18,0.92) 0%, rgba(18,18,18,0.3) 50%, transparent 100%)",
+                }} />
 
-              {/* Hover tint */}
-              <div className="cat-gold-tint" />
+                {/* Hover tint */}
+                <div className="cat-gold-tint" />
 
-              {/* Gold border on hover */}
-              <div className="cat-gold-border" />
+                {/* Gold border on hover */}
+                <div className="cat-gold-border" />
 
-              {/* Label */}
-              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "32px" }}>
-                <p style={{
-                  fontSize: "1.25rem", fontWeight: 700,
-                  fontFamily: "'Amiri', Georgia, serif",
-                  color: "#E8E0D0", marginBottom: 4
-                }}>
-                  {cat.name}
-                </p>
-                <p style={{ fontSize: 11, color: "rgba(232,224,208,0.7)", letterSpacing: "0.1em" }}>
-                  {cat.count} قطع
-                </p>
-              </div>
-            </a>
-          ))}
-        </div>
+                {/* Label */}
+                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "32px" }}>
+                  <p style={{
+                    fontSize: "1.25rem", fontWeight: 700,
+                    fontFamily: "'Amiri', Georgia, serif",
+                    color: "#E8E0D0", marginBottom: 4
+                  }}>
+                    {cat.name}
+                  </p>
+                  <p style={{ fontSize: 11, color: "rgba(232,224,208,0.7)", letterSpacing: "0.1em" }}>
+                    {cat.count} قطع
+                  </p>
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
       </div>
 
       <style>{`

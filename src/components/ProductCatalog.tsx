@@ -1,13 +1,10 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { products } from "@/lib/data";
-import type { Product } from "@/lib/data";
 import ProductCard from "./ProductCard";
 import ProductModal from "./ProductModal";
+import type { Product } from "@/lib/data";
 
-const FILTERS = ["الكل", "هوديز وتيشرتات", "بناطيل كارغو", "جواكيت"];
-
-export default function ProductCatalog() {
+export default function ProductCatalog({ products = [] }: { products: Product[] }) {
   const [activeFilter, setActiveFilter] = useState("الكل");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -23,15 +20,11 @@ export default function ProductCatalog() {
     return () => obs.disconnect();
   }, []);
 
-  const filterMap: Record<string, string> = {
-    "هوديز وتيشرتات": "hoodies_tees",
-    "بناطيل كارغو": "cargos",
-    "جواكيت": "jackets"
-  };
+  const dynamicFilters = ["الكل", ...Array.from(new Set(products.filter(p => p.category).map(p => p.category)))];
 
   const filtered = activeFilter === "الكل"
     ? products
-    : products.filter(p => p.category.toLowerCase() === filterMap[activeFilter]);
+    : products.filter(p => p.category === activeFilter);
 
   return (
     <section id="collection" style={{ padding: "112px 0", background: "#121212" }}>
@@ -51,10 +44,10 @@ export default function ProductCatalog() {
 
         {/* Filters */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 56 }}>
-          {FILTERS.map(f => (
+          {dynamicFilters.map((f: any) => (
             <button
               key={f}
-              id={`filter-${f.toLowerCase()}`}
+              id={`filter-${f}`}
               onClick={() => setActiveFilter(f)}
               style={{
                 padding: "8px 20px", fontSize: 10,
@@ -88,8 +81,9 @@ export default function ProductCatalog() {
         </div>
 
         {filtered.length === 0 && (
-          <div style={{ textAlign: "center", padding: "96px 0" }}>
-            <p style={{ fontSize: "1rem", color: "#4A4440" }}>لا توجد قطع في هذا القسم بعد.</p>
+          <div style={{ textAlign: "center", padding: "96px 0", background: "rgba(255,255,255,0.02)", borderRadius: 8, border: "1px dashed rgba(197,160,89,0.3)" }}>
+            <p style={{ fontSize: "1.5rem", color: "#E8E0D0", fontFamily: "'Amiri', serif" }}>مجموعتنا الجديدة ستتوفر قريباً...</p>
+            <p style={{ color: "#6A6260", marginTop: 8 }}>New collection dropping soon</p>
           </div>
         )}
       </div>

@@ -11,6 +11,12 @@ export const product = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'slug',
+      title: 'الرابط المختصر (Slug)',
+      type: 'slug',
+      options: { source: 'title' },
+    }),
+    defineField({
       name: 'description',
       title: 'وصف المنتج',
       type: 'text',
