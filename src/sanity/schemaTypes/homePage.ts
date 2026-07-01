@@ -2,27 +2,30 @@ import { defineType, defineField } from 'sanity'
 
 export const homePage = defineType({
   name: 'homePage',
-  title: 'الصفحة الرئيسية (Home Page)',
+  title: 'Home Page Control',
   type: 'document',
   fields: [
     defineField({
       name: 'heroTitle',
-      title: 'العنوان الرئيسي (Hero Title)',
+      title: 'Hero Title',
       type: 'string',
+      initialValue: 'أناقة تليق بك',
     }),
     defineField({
       name: 'heroSubtitle',
-      title: 'النص الفرعي (Hero Subtitle)',
+      title: 'Hero Subtitle',
       type: 'text',
+      initialValue: 'نقدم لك أحدث صيحات الموضة الكلاسيكية والحديثة بأجود أنواع الأقمشة الفاخرة.',
     }),
     defineField({
       name: 'ctaText',
-      title: 'نص الزر (CTA Text)',
+      title: 'Call to Action Text',
       type: 'string',
+      initialValue: 'اكتشف التشكيلة الجديدة',
     }),
     defineField({
       name: 'heroImage',
-      title: 'صورة الخلفية (Hero Image)',
+      title: 'Hero Image',
       type: 'image',
       options: { hotspot: true }
     }),

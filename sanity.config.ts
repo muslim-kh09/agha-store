@@ -7,17 +7,17 @@ import { product } from './src/sanity/schemaTypes/product'
 
 const customStructure = (S: any) =>
   S.list()
-    .title('إدارة المتجر')
+    .title('Store Management')
     .items([
       S.listItem()
-        .title('⚙️ إعدادات الموقع (Global Settings)')
+        .title('⚙️ Global Settings')
         .child(
           S.document()
             .schemaType('siteSettings')
             .documentId('siteSettings')
         ),
       S.listItem()
-        .title('🏠 الصفحة الرئيسية (Home Page)')
+        .title('🏠 Home Page Control')
         .child(
           S.document()
             .schemaType('homePage')
@@ -25,18 +25,18 @@ const customStructure = (S: any) =>
         ),
       S.divider(),
       S.listItem()
-        .title('🛍️ الأقسام (Categories)')
+        .title('🛍️ Categories')
         .schemaType('category')
-        .child(S.documentTypeList('category').title('الأقسام')),
+        .child(S.documentTypeList('category').title('Categories')),
       S.listItem()
-        .title('📦 المنتجات (Products)')
+        .title('📦 Products')
         .schemaType('product')
-        .child(S.documentTypeList('product').title('المنتجات')),
+        .child(S.documentTypeList('product').title('Products')),
     ])
 
 export default defineConfig({
   name: 'default',
-  title: 'Agha Store',
+  title: 'Agha Store CMS',
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '9sx6xvt7',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   basePath: '/studio',

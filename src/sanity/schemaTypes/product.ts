@@ -2,39 +2,39 @@ import { defineType, defineField } from 'sanity'
 
 export const product = defineType({
   name: 'product',
-  title: 'المنتجات',
+  title: 'Product',
   type: 'document',
   fields: [
     defineField({
       name: 'title',
-      title: 'اسم المنتج',
+      title: 'Product Title',
       type: 'string',
     }),
     defineField({
       name: 'slug',
-      title: 'الرابط المختصر (Slug)',
+      title: 'Slug',
       type: 'slug',
       options: { source: 'title' },
     }),
     defineField({
       name: 'category',
-      title: 'القسم',
+      title: 'Category',
       type: 'reference',
       to: [{ type: 'category' }],
     }),
     defineField({
       name: 'price',
-      title: 'السعر الأساسي',
+      title: 'Base Price',
       type: 'number',
     }),
     defineField({
       name: 'discountedPrice',
-      title: 'السعر بعد الخصم (اختياري)',
+      title: 'Discounted Price (Optional)',
       type: 'number',
     }),
     defineField({
       name: 'sizes',
-      title: 'المقاسات المتوفرة',
+      title: 'Available Sizes',
       type: 'array',
       of: [{ type: 'string' }],
       options: {
@@ -49,19 +49,19 @@ export const product = defineType({
     }),
     defineField({
       name: 'images',
-      title: 'صور المنتج',
+      title: 'Product Images',
       type: 'array',
       of: [{ type: 'image', options: { hotspot: true } }],
     }),
     defineField({
       name: 'description',
-      title: 'الوصف الشامل (Rich Text)',
+      title: 'Rich Description',
       type: 'array',
       of: [{ type: 'block' }],
     }),
     defineField({
       name: 'featured',
-      title: 'منتج مميز (يظهر في الصفحة الرئيسية؟)',
+      title: 'Featured (Show on Homepage?)',
       type: 'boolean',
       initialValue: false,
     }),

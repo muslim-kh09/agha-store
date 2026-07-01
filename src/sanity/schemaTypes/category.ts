@@ -2,28 +2,28 @@ import { defineType, defineField } from 'sanity'
 
 export const category = defineType({
   name: 'category',
-  title: 'الأقسام',
+  title: 'Category',
   type: 'document',
   fields: [
     defineField({
       name: 'title',
-      title: 'اسم القسم',
+      title: 'Category Name',
       type: 'string',
     }),
     defineField({
       name: 'slug',
-      title: 'الرابط المختصر (Slug)',
+      title: 'Slug',
       type: 'slug',
       options: { source: 'title' },
     }),
     defineField({
       name: 'description',
-      title: 'وصف القسم',
+      title: 'Description',
       type: 'text',
     }),
     defineField({
       name: 'image',
-      title: 'صورة القسم',
+      title: 'Cover Image',
       type: 'image',
       options: { hotspot: true },
     }),

@@ -43,8 +43,15 @@ const LINKS = {
   ],
 };
 
-export default function Footer() {
+export default function Footer({ settings = {} }: { settings?: any }) {
   const footerRef = useRef<HTMLElement>(null);
+
+  const dynamicSocials = [
+    { Icon: InstagramIcon, href: settings.instagramLink || SOCIALS[0].href, label: "Instagram" },
+    { Icon: WhatsAppIcon, href: settings.whatsappNumber ? `https://wa.me/${settings.whatsappNumber}` : SOCIALS[1].href, label: "WhatsApp" },
+    { Icon: FacebookIcon, href: settings.facebookLink || SOCIALS[2].href, label: "Facebook" },
+    { Icon: EmailIcon, href: SOCIALS[3].href, label: "Email" },
+  ];
 
   useEffect(() => {
     const els = footerRef.current?.querySelectorAll<HTMLElement>(".reveal");
@@ -61,7 +68,7 @@ export default function Footer() {
     <footer
       ref={footerRef}
       id="contact"
-      style={{ background: "#1A0F0A", paddingTop: 0, paddingBottom: 40 }}
+      style={{ background: "#3E2723", paddingTop: 0, paddingBottom: 40 }}
     >
       {/* Top gold rule */}
       <div style={{ height: 1, background: "rgba(197,160,89,0.2)" }} />
@@ -88,13 +95,13 @@ export default function Footer() {
               </div>
             </div>
 
-            <p style={{ fontSize: "0.95rem", lineHeight: 1.7, color: "#3A2820", maxWidth: 280, marginBottom: 32 }}>
+            <p style={{ fontSize: "0.95rem", lineHeight: 1.7, color: "rgba(232, 224, 208, 0.7)", maxWidth: 280, marginBottom: 32 }}>
               وجهتك الأولى لأحدث صيحات الأزياء الشبابية والستريت وير. ستايل يعبر عنك في كل الأوقات.
             </p>
 
             {/* Social icons */}
             <div style={{ display: "flex", gap: 12 }}>
-              {SOCIALS.map(({ Icon, href, label }) => (
+              {dynamicSocials.map(({ Icon, href, label }) => (
                 <a
                   key={label}
                   href={href}
@@ -104,11 +111,11 @@ export default function Footer() {
                   style={{
                     width: 36, height: 36, borderRadius: "50%",
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    color: "#4A3830", transition: "border-color 0.3s, color 0.3s",
+                    border: "1px solid rgba(255,255,255,0.15)",
+                    color: "#E8E0D0", transition: "border-color 0.3s, color 0.3s",
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = "#C5A059"; e.currentTarget.style.color = "#C5A059"; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.color = "#4A3830"; }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--primary-color, #C5A059)"; e.currentTarget.style.color = "var(--primary-color, #C5A059)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)"; e.currentTarget.style.color = "#E8E0D0"; }}
                 >
                   <Icon />
                 </a>
@@ -127,9 +134,9 @@ export default function Footer() {
                   <li key={link.label}>
                     <a
                       href={link.href}
-                      style={{ fontSize: "0.9rem", fontWeight: 500, color: "#4A3830", textDecoration: "none", transition: "color 0.3s" }}
-                      onMouseEnter={e => (e.currentTarget.style.color = "#C5A059")}
-                      onMouseLeave={e => (e.currentTarget.style.color = "#4A3830")}
+                      style={{ fontSize: "0.9rem", fontWeight: 500, color: "rgba(232, 224, 208, 0.7)", textDecoration: "none", transition: "color 0.3s" }}
+                      onMouseEnter={e => (e.currentTarget.style.color = "var(--primary-color, #C5A059)")}
+                      onMouseLeave={e => (e.currentTarget.style.color = "rgba(232, 224, 208, 0.7)")}
                     >
                       {link.label}
                     </a>
@@ -146,11 +153,11 @@ export default function Footer() {
           paddingTop: 32, borderTop: "1px solid rgba(197,160,89,0.1)",
           flexWrap: "wrap", gap: 12,
         }}>
-          <p style={{ fontSize: 11, letterSpacing: "0.05em", color: "#3A2820" }}>
+          <p style={{ fontSize: 11, letterSpacing: "0.05em", color: "rgba(232, 224, 208, 0.5)" }}>
             © {new Date().getFullYear()} متجر آغا. جميع الحقوق محفوظة.
           </p>
           <div style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
-            <p style={{ fontSize: 11, letterSpacing: "0.05em", color: "#3A2820" }}>
+            <p style={{ fontSize: 11, letterSpacing: "0.05em", color: "rgba(232, 224, 208, 0.5)" }}>
               تم تطوير الموقع بواسطة <a href="https://github.com/muslim-kh09" target="_blank" rel="noopener noreferrer" style={{ color: "#C5A059", textDecoration: "none" }}>خالد هاني</a>.
               لبناء ونشر موقعك تواصل عبر <a href="https://t.me/A245F" target="_blank" rel="noopener noreferrer" style={{ color: "#C5A059", textDecoration: "none" }}>تيليجرام</a>.
             </p>

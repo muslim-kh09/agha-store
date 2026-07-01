@@ -88,7 +88,7 @@ export default function Navbar({ settings = {} }: { settings?: any }) {
                 <Image src={logoUrl} alt="Logo" width={100} height={40} style={{ objectFit: "contain" }} />
               ) : (
                 <>
-                  <Image src="/images/lion-logo-gold.png" alt="Agha Store Lion Logo" width={32} height={32} />
+                  <Image src="/images/lion-logo.png" alt="Agha Store Lion Logo" width={32} height={32} />
                   <span style={{ fontSize: "1.4rem", fontWeight: 700, fontFamily: "'Cormorant Garamond', Georgia, serif", color: "#E8E0D0" }}>
                     متجر آغا
                   </span>

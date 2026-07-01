@@ -13,7 +13,7 @@ export default function HeroSection({ homePage = {} }: { homePage?: any }) {
   const heroTitle = homePage.heroTitle || "أناقة تليق بك";
   const heroSubtitle = homePage.heroSubtitle || "نقدم لك أحدث صيحات الموضة الكلاسيكية والحديثة بأجود أنواع الأقمشة الفاخرة.";
   const ctaText = homePage.ctaText || "اكتشف التشكيلة الجديدة";
-  const heroImage = homePage.heroImage || "/images/hero-fashion-model.png";
+  const heroImage = homePage.heroImage || "/images/hero.png";
   const sectionRef = useRef<HTMLElement>(null);
 
   /* Scroll reveal for text */
@@ -56,6 +56,17 @@ export default function HeroSection({ homePage = {} }: { homePage?: any }) {
         background: "#121212",
       }}
     >
+      {/* Background Image */}
+      <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+        <Image
+          src={heroImage}
+          alt="Luxury Fashion Model"
+          fill
+          priority
+          style={{ objectFit: "cover", objectPosition: "top" }}
+        />
+      </div>
+
       {/* Islamic Pattern Background */}
       <div style={{
         position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none",
@@ -76,7 +87,20 @@ export default function HeroSection({ homePage = {} }: { homePage?: any }) {
         padding: "0 clamp(20px, 5vw, 32px)",
         display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center",
       }}>
-        <h1 className="hero-text hero-title" style={{
+        {/* Eyebrow */}
+        <p
+          className="anim-fade-up"
+          style={{
+            fontSize: 11, letterSpacing: "0.2em",
+            color: "var(--primary-color, #C5A059)",
+            marginBottom: 32,
+            fontFamily: "'Amiri', serif"
+          }}
+        >
+          دروب الموسم — ٢٠٢٦
+        </p>
+
+        <h1 className="hero-text hero-title anim-fade-up delay-200" style={{
           fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
           fontWeight: 700,
           lineHeight: 1.1,
@@ -86,7 +110,7 @@ export default function HeroSection({ homePage = {} }: { homePage?: any }) {
         }}>
           {heroTitle}
         </h1>
-        <p className="hero-text hero-subtitle" style={{
+        <p className="hero-text hero-subtitle anim-fade-up delay-300" style={{
           fontSize: "clamp(1rem, 2vw, 1.25rem)",
           color: "rgba(255, 255, 255, 0.8)",
           maxWidth: "600px",
@@ -96,7 +120,7 @@ export default function HeroSection({ homePage = {} }: { homePage?: any }) {
           {heroSubtitle}
         </p>
 
-        <div className="hero-text">
+        <div className="hero-text anim-fade-up delay-400">
           <a href="#collection" style={{
             display: "inline-block",
             padding: "16px 36px",
